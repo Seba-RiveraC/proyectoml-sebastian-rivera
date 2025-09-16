@@ -1,0 +1,23 @@
+# Archivos de entrada (raw data)
+countries_gdp:
+  type: kedro_datasets.pandas.CSVDataset
+  filepath: data/01_raw/countries_gdp_hist.csv
+  load_args:
+    sep: ;
+
+life_expectancy:
+  type: kedro_datasets.pandas.CSVDataset
+  filepath: data/01_raw/life-expectancy.csv
+
+organizations_gdp:
+  type: kedro_datasets.pandas.CSVDataset
+  filepath: data/01_raw/organizations_gdp_hist.csv
+  load_args:
+    sep: ;
+
+# Archivo de salida (procesado)
+master_table:
+  type: kedro_datasets.pandas.CSVDataset
+  filepath: data/02_intermediate/master_table.csv
+  save_args:
+    index: False
