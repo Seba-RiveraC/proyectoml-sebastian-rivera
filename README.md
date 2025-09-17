@@ -1,101 +1,31 @@
-# proyectoml_sebastian-rivera
+# Proyecto ML: Análisis de Correlación entre PIB y Esperanza de Vida
 
 [![Powered by Kedro](https://img.shields.io/badge/powered_by-kedro-ffc900?logo=kedro)](https://kedro.org)
 
-## Overview
+**Análisis de la correlación entre indicadores económicos y la esperanza de vida utilizando un pipeline de datos robusto y reproducible construido con el framework Kedro.**
 
-This is your new Kedro project, which was generated using `kedro 1.0.0`.
+---
 
-Take a look at the [Kedro documentation](https://docs.kedro.org) to get started.
+## 📄 Descripción del Proyecto
 
-## Rules and guidelines
+Este proyecto implementa las primeras fases de la metodología CRISP-DM para investigar la relación entre el Producto Interno Bruto (PIB) de un país y la esperanza de vida de su población.
 
-In order to get the best out of the template:
-
-* Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a data engineering convention
-* Don't commit data to your repository
-* Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
-
-## How to install dependencies
-
-Declare any dependencies in `requirements.txt` for `pip` installation.
-
-To install them, run:
-
-```
-pip install -r requirements.txt
-```
-
-## How to run your Kedro pipeline
-
-You can run your Kedro project with:
-
-```
-kedro run
-```
-
-## How to test your Kedro project
-
-Have a look at the file `tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
-
-```
-pytest
-```
-
-You can configure the coverage threshold in your project's `pyproject.toml` file under the `[tool.coverage.report]` section.
+Utilizando el framework Kedro, se ha construido un pipeline de ingeniería de datos que automatiza el proceso de ingesta, limpieza, integración y transformación de tres fuentes de datos distintas. El resultado es una tabla maestra consolidada, la cual se utiliza para realizar un Análisis Exploratorio de Datos (EDA) en un entorno de Jupyter Notebook integrado, con el fin de descubrir patrones, correlaciones y insights iniciales.
 
 
-## Project dependencies
+El flujo de trabajo implementado en este proyecto sigue las mejores prácticas de un pipeline de datos:
 
-To see and update the dependency requirements for your project use `requirements.txt`. You can install the project requirements with `pip install -r requirements.txt`.
+1.  **Ingesta de Datos:** Se cargan tres datasets distintos (`countries_gdp_hist`, `life-expectancy`, `organizations_gdp_hist`) a través del **Catálogo de Datos** de Kedro, centralizando la configuración.
+2.  **Limpieza y Normalización:** Se ejecutan nodos programados en Python para limpiar los nombres de las columnas y normalizar los nombres de las entidades (países y organizaciones) para permitir una futura unión.
+3.  **Integración de Datos:** Los datasets de PIB se combinan y luego se unen con el de esperanza de vida utilizando el año y el nombre normalizado del país como claves.
+4.  **Salida Final:** El pipeline genera una **tabla maestra** (`master_table.csv`) que contiene todos los datos limpios y consolidados, lista para ser utilizada en la fase de análisis.
 
-[Further information about project dependencies](https://docs.kedro.org/en/stable/kedro_project_setup/dependencies.html#project-specific-dependencies)
+Todo este proceso se ejecuta de forma automatizada con un solo comando: `kedro run`.
 
-## How to work with Kedro and notebooks
+### Conclusiones del Análisis
 
-> Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `context`, 'session', `catalog`, and `pipelines`.
->
-> Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `pip install -r requirements.txt` you will not need to take any extra steps before you use them.
+El Análisis Exploratorio de Datos (EDA) realizado sobre la tabla maestra reveló una **fuerte correlación positiva** entre el PIB de un país y la esperanza de vida de sus habitantes. Los hallazgos clave son:
 
-### Jupyter
-To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
-
-```
-pip install jupyter
-```
-
-After installing Jupyter, you can start a local notebook server:
-
-```
-kedro jupyter notebook
-```
-
-### JupyterLab
-To use JupyterLab, you need to install it:
-
-```
-pip install jupyterlab
-```
-
-You can also start JupyterLab:
-
-```
-kedro jupyter lab
-```
-
-### IPython
-And if you want to run an IPython session:
-
-```
-kedro ipython
-```
-
-### How to ignore notebook output cells in `git`
-To automatically strip out all output cell contents before committing to `git`, you can use tools like [`nbstripout`](https://github.com/kynan/nbstripout). For example, you can add a hook in `.git/config` with `nbstripout --install`. This will run `nbstripout` before anything is committed to `git`.
-
-> *Note:* Your output cells will be retained locally.
-
-## Package your Kedro project
-
-[Further information about building project documentation and packaging your project](https://docs.kedro.org/en/stable/tutorial/package_a_project.html)
+* Existe una clara tendencia donde a mayor riqueza de un país, mayor es la esperanza de vida de su población.
+* El análisis visual sugiere que el mayor impacto del crecimiento económico en la salud se observa en países de ingresos bajos y medios.
+* Esta correlación confirma la viabilidad de utilizar variables económicas para desarrollar futuros modelos de Machine Learning que puedan predecir o estimar la esperanza de vida.
